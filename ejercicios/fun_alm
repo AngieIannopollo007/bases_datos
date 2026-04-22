@@ -1,0 +1,46 @@
+-- Cree una función para cada punto teniendo en cuenta que
+-- 1) El subsidio de transporte equivale al 7% al salario básico
+    DELIMITER // 
+    CREATE FUNCTION subsidio(
+        CodEmp1 float
+    )
+    RETURNS float
+    DETERMINISTIC
+    BEGIN 
+        DECLARE SAL float;
+        DECLARE subsidio float;
+        SELECT salario INTO sal FROM empleado WHERE CodEmp = CodEmp1;
+        SET subsidio = sal * 0.07;
+        RETURN subsidio;
+    END;
+    // 
+    SELECT subsidio(10)//
++--------------+
+| subsidio(10) |
++--------------+
+|      78718.1 |
++--------------+
+1 row in set (0.004 sec)
+
+-- 2) La salud que corresponde al 4% al salario básico
+DELIMITER //
+CREATE FUNCTION salud(
+    CodEmp1 INT
+)
+RETURNS float
+DETERMINISTIC
+BEGIN 
+    DECLARE salud FLOAT;
+    DECLARE sal FLOAT;
+    SELECT salario INTO sal FROM empleado WHERE CodEmp = CodEmp1;
+    SET salud = sal * 0.04;
+    RETURN salud;
+END;//
+ SELECT salud(4);
+    -> //
++----------+
+| salud(4) |
++----------+
+|  4000.01 |
++----------+
+1 row in set (0.002 sec)
